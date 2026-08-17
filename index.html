@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JC Torres — I build the systems a business runs on</title>
-<meta name="description" content="CRM builds, automation, and AI wired into the work. I find what is quietly broken, fix it, and document it so your team can run it without me.">
+<meta name="description" content="CRM builds, automation, and AI wired into the work. I find what is quietly broken, fix it, and document it so your team knows exactly how it works.">
 <meta property="og:title" content="JC Torres — I build the systems a business runs on">
-<meta property="og:description" content="CRM builds, automation, and AI wired into the work. Then documented, so your team can run it without me.">
+<meta property="og:description" content="CRM builds, automation, and AI wired into the work. Then documented, so your team knows exactly how it works.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#101a2e">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -324,7 +324,7 @@
     background: var(--panel); border: 1px solid var(--line);
     border-radius: 18px; padding: 1.6rem;
     box-shadow: 0 26px 60px -22px rgba(16,26,46,0.42);
-    max-height: min(78vh, 660px); overflow-y: auto;
+    max-height: calc(100vh - 128px); overflow-y: auto; scrollbar-width: thin;
   }
   .panel[hidden] { display: none; }
   .panel { padding: 0; }
@@ -332,7 +332,7 @@
     position: sticky; top: 0; z-index: 2;
     display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;
     background: var(--panel); border-bottom: 1px solid var(--line);
-    padding: 1.3rem 1.5rem 1.1rem; border-radius: 18px 18px 0 0;
+    padding: 1.15rem 1.5rem 0.95rem; border-radius: 18px 18px 0 0;
   }
   .panel-bar h2 { font-family: Fraunces, Georgia, serif; font-size: 1.24rem; color: var(--navy); line-height: 1.15; letter-spacing: -0.015em; }
   .panel-bar p { font-size: var(--step--1); color: var(--muted); margin-top: 0.25rem; }
@@ -342,7 +342,7 @@
   }
   .panel-x:hover { color: var(--navy); }
   .panel-x svg { width: 19px; height: 19px; }
-  .panel-body { padding: 0 1.5rem 1.5rem; }
+  .panel-body { padding: 0 1.5rem 1.35rem; }
 
   .done[hidden] { display: none; }
   .done { padding-top: 1.6rem; text-align: left; }
@@ -361,21 +361,21 @@
   #enq-form[hidden] { display: none; }
   #enq-form label {
     font-size: var(--step--1); font-weight: 600; color: var(--navy);
-    margin-bottom: 0.35rem; margin-top: 0.85rem;
+    margin-bottom: 0.3rem; margin-top: 0.7rem;
   }
   #enq-form label span { font-weight: 400; color: var(--muted); }
   #enq-form input, #enq-form select, #enq-form textarea {
     font-family: inherit; font-size: var(--step--1); color: var(--ink);
     border: 1px solid var(--line); border-radius: 10px;
-    padding: 0.7rem 0.85rem; min-height: 44px; background: #fff; width: 100%;
+    padding: 0.6rem 0.85rem; min-height: 44px; background: #fff; width: 100%;
     transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
   }
-  #enq-form textarea { resize: vertical; min-height: 76px; }
+  #enq-form textarea { resize: vertical; min-height: 58px; }
   #enq-form input:focus, #enq-form select:focus, #enq-form textarea:focus {
     outline: 0; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,109,245,0.13);
   }
   #enq-form input[aria-invalid="true"] { border-color: #cf4a3f; }
-  #enq-form .btn { margin-top: 1.3rem; width: 100%; }
+  #enq-form .btn { margin-top: 1.1rem; width: 100%; }
   .honey { position: absolute; left: -9999px; width: 1px; height: 1px; }
   .form-note { margin-top: 0.8rem; font-size: var(--step--1); line-height: 1.45; }
   .form-note.ok { color: #1f9d55; }
@@ -414,7 +414,7 @@
         <p class="lede">
           Most businesses do not lose money because the marketing is wrong. They lose it in the gap
           between an enquiry arriving and somebody acting on it. I close that gap, then document what
-          I built so your team can run it without me.
+          I built so your team knows exactly how it works.
         </p>
         <div class="cta-row">
           <a class="btn" href="#contact">Tell me what is broken</a>
@@ -727,8 +727,8 @@
       </div>
       <div class="step">
         <h3>Document and hand over</h3>
-        <p>Written guides your team can follow without me. A system nobody else can run is not
-        finished, it is a dependency.</p>
+        <p>Written guides your team can actually follow. A system only one person understands is not
+        finished, it is a risk.</p>
       </div>
     </div>
   </section>
@@ -855,7 +855,7 @@
     </select>
 
     <label for="f-msg">Tell me a bit more <span>optional</span></label>
-    <textarea id="f-msg" name="message" rows="3"></textarea>
+    <textarea id="f-msg" name="message" rows="2"></textarea>
 
     <!-- bots fill this, people never see it -->
     <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
