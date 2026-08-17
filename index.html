@@ -327,10 +327,38 @@
     max-height: min(78vh, 660px); overflow-y: auto;
   }
   .panel[hidden] { display: none; }
-  .panel-head h2 { font-family: Fraunces, Georgia, serif; font-size: 1.3rem; color: var(--navy); line-height: 1.15; letter-spacing: -0.015em; }
-  .panel-head p { font-size: var(--step--1); color: var(--muted); margin-top: 0.5rem; }
+  .panel { padding: 0; }
+  .panel-bar {
+    position: sticky; top: 0; z-index: 2;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem;
+    background: var(--panel); border-bottom: 1px solid var(--line);
+    padding: 1.3rem 1.5rem 1.1rem; border-radius: 18px 18px 0 0;
+  }
+  .panel-bar h2 { font-family: Fraunces, Georgia, serif; font-size: 1.24rem; color: var(--navy); line-height: 1.15; letter-spacing: -0.015em; }
+  .panel-bar p { font-size: var(--step--1); color: var(--muted); margin-top: 0.25rem; }
+  .panel-x {
+    flex: none; background: transparent; border: 0; cursor: pointer; color: var(--muted);
+    padding: 0.35rem; margin: -0.35rem -0.35rem 0 0; border-radius: 8px; line-height: 0;
+  }
+  .panel-x:hover { color: var(--navy); }
+  .panel-x svg { width: 19px; height: 19px; }
+  .panel-body { padding: 0 1.5rem 1.5rem; }
 
-  #enq-form { margin-top: 1.2rem; display: flex; flex-direction: column; }
+  .done[hidden] { display: none; }
+  .done { padding-top: 1.6rem; text-align: left; }
+  .done .tick {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: #e8f6ee; color: #1f9d55;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
+  }
+  .done .tick svg { width: 24px; height: 24px; }
+  .done h3 { font-family: Fraunces, Georgia, serif; font-size: 1.28rem; color: var(--navy); line-height: 1.2; }
+  .done p { font-size: var(--step--1); color: var(--muted); margin-top: 0.7rem; line-height: 1.55; }
+  .done .reach { margin-top: 1.2rem; }
+
+  #enq-form { margin-top: 0.4rem; display: flex; flex-direction: column; }
+  /* display:flex beats the hidden attribute, so it needs saying explicitly */
+  #enq-form[hidden] { display: none; }
   #enq-form label {
     font-size: var(--step--1); font-weight: 600; color: var(--navy);
     margin-bottom: 0.35rem; margin-top: 0.85rem;
@@ -795,11 +823,17 @@
 </button>
 
 <div class="panel" id="enquiry" role="dialog" aria-modal="false" aria-labelledby="enq-h" hidden>
-  <div class="panel-head">
-    <h2 id="enq-h">What are you trying to fix?</h2>
-    <p>Give me the short version and I will come back to you honestly about whether I can help.</p>
+  <div class="panel-bar">
+    <div>
+      <h2 id="enq-h">What are you trying to fix?</h2>
+      <p>Short version is fine.</p>
+    </div>
+    <button type="button" class="panel-x" id="panel-x" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
   </div>
 
+  <div class="panel-body">
   <form id="enq-form" novalidate>
     <label for="f-name">Name</label>
     <input id="f-name" name="name" type="text" autocomplete="name" required>
@@ -829,6 +863,8 @@
     <button type="submit" class="btn" id="f-submit">Send it over</button>
     <p class="form-note" id="f-note" role="status" aria-live="polite"></p>
   </form>
+  <div class="done" id="enq-done" hidden></div>
+  </div>
 </div>
 
 <footer class="wrap">
@@ -1052,6 +1088,7 @@
   }
 
   fab.addEventListener('click', () => openPanel(panel.hidden));
+  document.getElementById('panel-x').addEventListener('click', () => { openPanel(false); fab.focus(); });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !panel.hidden) { openPanel(false); fab.focus(); }
@@ -1100,8 +1137,21 @@
       });
       if (!res.ok) throw new Error(res.status);
       form.reset();
-      note.classList.add('ok');
-      note.textContent = 'Sent. I will come back to you, usually within a day.';
+      form.hidden = true;
+      const done = document.getElementById('enq-done');
+      done.hidden = false;
+      done.innerHTML =
+        `<div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></div>
+         <h3>Got it, ${name.split(' ')[0]}.</h3>
+         <p>That has landed in my inbox with everything you wrote. I read these myself, so what comes back will be a real answer about whether I can help, not a template.</p>
+         <p>If it is easier to talk it through, WhatsApp is the fastest way to reach me.</p>
+         <div class="reach">
+           <a class="wa" href="${waLink('Hi JC, I just sent an enquiry through your site.')}" target="_blank" rel="noopener">${ICON_WA} WhatsApp me</a>
+         </div>`;
+      document.getElementById('enq-h').textContent = 'Thanks for that';
+      document.querySelector('.panel-bar p').textContent = 'Nothing else needed from you.';
+      done.querySelector('h3').setAttribute('tabindex', '-1');
+      done.querySelector('h3').focus();
     } catch {
       note.classList.add('bad');
       note.innerHTML = `That did not send. Email me directly at <strong>${EMAIL}</strong> or WhatsApp +63 968 175 7476.`;
