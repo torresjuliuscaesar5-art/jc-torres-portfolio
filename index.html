@@ -270,14 +270,16 @@
   }
   .answer.miss { border-left-color: var(--amber); }
   .reach { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
-  .reach a {
+  .reach a, .reach .mail-btn {
     display: inline-flex; align-items: center; gap: 0.5rem;
+    background: transparent; cursor: pointer; font-family: inherit;
     font-size: var(--step--1); font-weight: 600; text-decoration: none;
     padding: 0.6rem 1.1rem; border-radius: 999px; min-height: 42px;
     border: 1px solid var(--line); color: var(--navy);
     transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
   }
-  .reach a:hover { border-color: var(--accent); color: var(--accent); }
+  .reach a:hover, .reach .mail-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .reach-note { margin-top: 0.7rem; font-size: var(--step--1); color: #1f9d55; }
   .reach a.wa:hover { border-color: #1f9d55; color: #1f9d55; }
   .reach svg { width: 17px; height: 17px; }
 
@@ -861,10 +863,32 @@
   function reachBlock(question) {
     const subject = question ? `Question: ${question}` : 'Question from your site';
     return `<div class="reach">
-      <a href="mailto:${EMAIL}?subject=${encodeURIComponent(subject)}">${ICON_MAIL} Email me</a>
+      <button type="button" class="mail-btn" data-subject="${subject.replace(/"/g, '&quot;')}">${ICON_MAIL} <span>Email me</span></button>
       <a class="wa" href="${waLink(subject)}" target="_blank" rel="noopener">${ICON_WA} WhatsApp me</a>
-    </div>`;
+    </div>
+    <p class="reach-note" hidden></p>`;
   }
+
+  // one delegated handler, because the answer block is rebuilt on every keystroke
+  answerEl.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.mail-btn');
+    if (!btn) return;
+    const subject = btn.dataset.subject || '';
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+    } catch {
+      const f = document.createElement('textarea');
+      f.value = EMAIL; f.setAttribute('readonly', '');
+      f.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(f); f.select(); document.execCommand('copy'); f.remove();
+    }
+    const note = answerEl.querySelector('.reach-note');
+    if (note) {
+      note.hidden = false;
+      note.textContent = `${EMAIL} copied. Opening your mail app too, if you have one set up.`;
+    }
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}`;
+  });
 
   function score(query, item) {
     const q = query.toLowerCase();
