@@ -300,6 +300,59 @@
   footer a { text-decoration: none; }
   footer a:hover { color: var(--accent); }
 
+  /* ================= floating enquiry ================= */
+  .fab {
+    position: fixed; right: 24px; bottom: 24px; z-index: 50;
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--navy); color: #fff; border: 0; cursor: pointer;
+    font-family: inherit; font-size: var(--step--1); font-weight: 600;
+    padding: 0.95rem 1.4rem; border-radius: 999px; min-height: 52px;
+    box-shadow: 0 14px 34px -12px rgba(16,26,46,0.55);
+    transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .fab:hover { background: var(--accent); transform: translateY(-2px); }
+  .fab svg { width: 21px; height: 21px; display: block; }
+  .fab-close { display: none; }
+  .fab[aria-expanded="true"] .fab-open { display: none; }
+  .fab[aria-expanded="true"] .fab-close { display: block; }
+  .fab[aria-expanded="true"] .fab-text { display: none; }
+  @media (max-width: 560px) { .fab-text { display: none; } .fab { padding: 0.95rem; } }
+
+  .panel {
+    position: fixed; right: 24px; bottom: 92px; z-index: 51;
+    width: min(384px, calc(100vw - 48px));
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 18px; padding: 1.6rem;
+    box-shadow: 0 26px 60px -22px rgba(16,26,46,0.42);
+    max-height: min(78vh, 660px); overflow-y: auto;
+  }
+  .panel[hidden] { display: none; }
+  .panel-head h2 { font-family: Fraunces, Georgia, serif; font-size: 1.3rem; color: var(--navy); line-height: 1.15; letter-spacing: -0.015em; }
+  .panel-head p { font-size: var(--step--1); color: var(--muted); margin-top: 0.5rem; }
+
+  #enq-form { margin-top: 1.2rem; display: flex; flex-direction: column; }
+  #enq-form label {
+    font-size: var(--step--1); font-weight: 600; color: var(--navy);
+    margin-bottom: 0.35rem; margin-top: 0.85rem;
+  }
+  #enq-form label span { font-weight: 400; color: var(--muted); }
+  #enq-form input, #enq-form select, #enq-form textarea {
+    font-family: inherit; font-size: var(--step--1); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 0.7rem 0.85rem; min-height: 44px; background: #fff; width: 100%;
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+  #enq-form textarea { resize: vertical; min-height: 76px; }
+  #enq-form input:focus, #enq-form select:focus, #enq-form textarea:focus {
+    outline: 0; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,109,245,0.13);
+  }
+  #enq-form input[aria-invalid="true"] { border-color: #cf4a3f; }
+  #enq-form .btn { margin-top: 1.3rem; width: 100%; }
+  .honey { position: absolute; left: -9999px; width: 1px; height: 1px; }
+  .form-note { margin-top: 0.8rem; font-size: var(--step--1); line-height: 1.45; }
+  .form-note.ok { color: #1f9d55; }
+  .form-note.bad { color: #cf4a3f; }
+
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
   .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
@@ -726,6 +779,58 @@
 
 </main>
 
+<!-- floating enquiry -->
+<button type="button" class="fab" id="fab" aria-expanded="false" aria-controls="enquiry">
+  <span class="fab-open" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.4 8.4 0 01-9 8.4 9 9 0 01-3.4-.7L3 21l1.9-5.3A8.4 8.4 0 0112 3a8.4 8.4 0 019 8.5z"/>
+    </svg>
+  </span>
+  <span class="fab-close" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+      <path d="M6 6l12 12M18 6L6 18"/>
+    </svg>
+  </span>
+  <span class="fab-text">Tell me what you need</span>
+</button>
+
+<div class="panel" id="enquiry" role="dialog" aria-modal="false" aria-labelledby="enq-h" hidden>
+  <div class="panel-head">
+    <h2 id="enq-h">What are you trying to fix?</h2>
+    <p>Give me the short version and I will come back to you honestly about whether I can help.</p>
+  </div>
+
+  <form id="enq-form" novalidate>
+    <label for="f-name">Name</label>
+    <input id="f-name" name="name" type="text" autocomplete="name" required>
+
+    <label for="f-email">Email</label>
+    <input id="f-email" name="email" type="email" autocomplete="email" required>
+
+    <label for="f-phone">Phone or WhatsApp <span>optional</span></label>
+    <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+
+    <label for="f-type">What do you need</label>
+    <select id="f-type" name="type">
+      <option>A CRM built from scratch</option>
+      <option>Something is broken and I do not know why</option>
+      <option>Moving off another CRM</option>
+      <option>Automation between tools</option>
+      <option>An account someone else built</option>
+      <option>Not sure yet</option>
+    </select>
+
+    <label for="f-msg">Tell me a bit more <span>optional</span></label>
+    <textarea id="f-msg" name="message" rows="3"></textarea>
+
+    <!-- bots fill this, people never see it -->
+    <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <button type="submit" class="btn" id="f-submit">Send it over</button>
+    <p class="form-note" id="f-note" role="status" aria-live="polite"></p>
+  </form>
+</div>
+
 <footer class="wrap">
   <span>JC Torres · Pampanga, Philippines · Works across AU, US and UK hours</span>
   <span><a href="https://www.linkedin.com/in/jc-torres-31b693402/">LinkedIn</a></span>
@@ -927,6 +1032,83 @@
   askInput.addEventListener('input', () => {
     clearTimeout(t);
     t = setTimeout(() => render(askInput.value), 220);
+  });
+
+  /* ---------------- floating enquiry ----------------
+     Static hosting cannot send mail, so the form posts to Formsubmit, which
+     needs no key. The first submission triggers a one time activation email
+     that has to be clicked before anything is delivered. */
+
+  const fab = document.getElementById('fab');
+  const panel = document.getElementById('enquiry');
+  const form = document.getElementById('enq-form');
+  const note = document.getElementById('f-note');
+  const submitBtn = document.getElementById('f-submit');
+
+  function openPanel(open) {
+    panel.hidden = !open;
+    fab.setAttribute('aria-expanded', String(open));
+    if (open) document.getElementById('f-name').focus();
+  }
+
+  fab.addEventListener('click', () => openPanel(panel.hidden));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !panel.hidden) { openPanel(false); fab.focus(); }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (panel.hidden) return;
+    if (!panel.contains(e.target) && !fab.contains(e.target)) openPanel(false);
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    note.className = 'form-note';
+    note.textContent = '';
+
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+
+    for (const [field, ok] of [['name', name], ['email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)]]) {
+      form[field].setAttribute('aria-invalid', ok ? 'false' : 'true');
+    }
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      note.classList.add('bad');
+      note.textContent = 'I need a name and a working email to reply to.';
+      return;
+    }
+    if (form._honey.value) return; // bot
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending';
+
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${EMAIL}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          phone: form.phone.value.trim() || 'not given',
+          'what they need': form.type.value,
+          message: form.message.value.trim() || 'not given',
+          _subject: `Website enquiry from ${name}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+      if (!res.ok) throw new Error(res.status);
+      form.reset();
+      note.classList.add('ok');
+      note.textContent = 'Sent. I will come back to you, usually within a day.';
+    } catch {
+      note.classList.add('bad');
+      note.innerHTML = `That did not send. Email me directly at <strong>${EMAIL}</strong> or WhatsApp +63 968 175 7476.`;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send it over';
+    }
   });
 
   ['Can you fix an account someone else built?', 'How long does it take?', 'What does it cost?', 'Do you run ads?', 'Can you handle sensitive data?']
