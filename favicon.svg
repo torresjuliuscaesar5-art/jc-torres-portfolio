@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="One trigger, two actions">
+  <rect width="64" height="64" rx="15" fill="#101a2e"/>
+  <g fill="none" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round">
+    <path d="M20 32h7c5 0 5-14 10-14"/>
+    <path d="M20 32h7c5 0 5 14 10 14"/>
+  </g>
+  <circle cx="17" cy="32" r="9" fill="#3b6df5"/>
+  <circle cx="45" cy="17" r="7.5" fill="#ffffff"/>
+  <circle cx="45" cy="47" r="7.5" fill="#ffffff"/>
+</svg>
