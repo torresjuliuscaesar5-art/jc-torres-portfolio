@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JC Torres — Automation and CRM Systems</title>
+<meta name="description" content="I build the systems a business runs on. GoHighLevel, n8n, and AI wired into the work, then documented so your team can run it without me.">
+<meta property="og:title" content="JC Torres — Automation and CRM Systems">
+<meta property="og:description" content="I build the systems a business runs on, then document them so your team can run them without me.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #16233d;
+    --navy-soft: #2c4470;
+    --accent: #2f5fe0;
+    --ink: #1a212c;
+    --muted: #5d6779;
+    --line: #e3e7ee;
+    --paper: #fbfaf8;
+    --panel: #ffffff;
+
+    --step--1: clamp(0.82rem, 0.8rem + 0.1vw, 0.88rem);
+    --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.06rem);
+    --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.45rem);
+    --step-2: clamp(1.6rem, 1.35rem + 1.2vw, 2.3rem);
+    --step-3: clamp(2.6rem, 1.8rem + 3.6vw, 5.4rem);
+
+    --gap-section: clamp(4rem, 3rem + 5vw, 8rem);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  body {
+    font-family: Inter, "Segoe UI", system-ui, sans-serif;
+    font-size: var(--step-0);
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* subtle paper grain, keeps it off default-template territory */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { width: min(1120px, calc(100% - 2.5rem)); margin-inline: auto; position: relative; z-index: 1; }
+
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .skip {
+    position: absolute; left: -9999px; top: 0;
+    background: var(--navy); color: #fff; padding: 0.75rem 1.25rem; z-index: 50;
+  }
+  .skip:focus { left: 0; }
+
+  /* ---------- header ---------- */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in oklab, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 0; }
+  .mark { font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); letter-spacing: -0.01em; }
+  nav ul { display: flex; gap: 1.6rem; list-style: none; }
+  nav a {
+    text-decoration: none; font-size: var(--step--1); color: var(--muted);
+    font-weight: 500; transition: color 0.2s var(--ease);
+  }
+  nav a:hover { color: var(--accent); }
+  @media (max-width: 620px) { nav { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding: clamp(3.5rem, 2rem + 7vw, 7rem) 0 var(--gap-section); }
+  .eyebrow {
+    font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--accent); font-weight: 600; margin-bottom: 1.4rem;
+  }
+  h1 {
+    font-family: Fraunces, Georgia, serif;
+    font-size: var(--step-3);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--navy);
+    font-weight: 700;
+    max-width: 16ch;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede {
+    margin-top: 1.8rem; max-width: 54ch; font-size: var(--step-1);
+    line-height: 1.45; color: var(--ink);
+  }
+  .hero-meta {
+    margin-top: 2.6rem; display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    background: var(--navy); color: #fff; text-decoration: none;
+    padding: 0.85rem 1.5rem; border-radius: 999px;
+    font-weight: 600; font-size: var(--step--1);
+    min-height: 44px;
+    transition: transform 0.25s var(--ease), background 0.25s var(--ease);
+  }
+  .btn:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--navy); border: 1px solid var(--line); }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); background: transparent; }
+
+  /* ---------- sections ---------- */
+  section { padding-block: var(--gap-section); }
+  .sec-head { display: flex; align-items: baseline; gap: 1.2rem; margin-bottom: 2.8rem; }
+  .sec-num {
+    font-family: Fraunces, Georgia, serif; font-size: var(--step--1);
+    color: var(--accent); font-weight: 700; letter-spacing: 0.1em;
+  }
+  h2 {
+    font-family: Fraunces, Georgia, serif; font-size: var(--step-2);
+    color: var(--navy); letter-spacing: -0.02em; line-height: 1.1; font-weight: 700;
+  }
+  .rule { flex: 1; height: 1px; background: var(--line); }
+
+  /* ---------- capabilities ---------- */
+  .caps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .cap { background: var(--panel); padding: 1.8rem 1.6rem; transition: background 0.3s var(--ease); }
+  .cap:hover { background: #f4f7fd; }
+  .cap h3 { font-size: var(--step-0); color: var(--navy); font-weight: 600; margin-bottom: 0.6rem; }
+  .cap p { font-size: var(--step--1); color: var(--muted); line-height: 1.55; }
+
+  /* ---------- work ---------- */
+  .work { display: grid; gap: 1.4rem; }
+  .item {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: clamp(1.5rem, 1rem + 1.6vw, 2.4rem);
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr); gap: 1.4rem 2.6rem;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .item:hover { border-color: var(--navy-soft); transform: translateY(-3px); }
+  @media (max-width: 780px) { .item { grid-template-columns: 1fr; } }
+  .item h3 { font-family: Fraunces, Georgia, serif; font-size: var(--step-1); color: var(--navy); line-height: 1.15; letter-spacing: -0.01em; }
+  .item .kind { font-size: var(--step--1); color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
+  .item p { color: var(--ink); }
+  .item p + p { margin-top: 0.8rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.1rem; }
+  .tag {
+    font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--navy-soft); background: #eef2f9; border-radius: 999px;
+    padding: 0.3rem 0.7rem; font-weight: 600;
+  }
+
+  /* ---------- experience ---------- */
+  .roles { border-top: 1px solid var(--line); }
+  .role {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 0.6rem 2.6rem;
+    padding: 1.6rem 0; border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 700px) { .role { grid-template-columns: 1fr; } }
+  .role h3 { font-size: var(--step-0); color: var(--navy); font-weight: 600; }
+  .role .co { font-size: var(--step--1); color: var(--muted); margin-top: 0.15rem; }
+  .role p { font-size: var(--step--1); color: var(--ink); line-height: 1.6; }
+  .role strong { color: var(--navy); font-weight: 600; }
+
+  /* ---------- contact ---------- */
+  .contact { background: var(--navy); color: #fff; border-radius: 20px; padding: clamp(2.2rem, 1.5rem + 3vw, 4.2rem); }
+  .contact h2 { color: #fff; max-width: 18ch; }
+  .contact p { color: #c3cddf; margin-top: 1.1rem; max-width: 46ch; }
+  .contact .btn { background: #fff; color: var(--navy); margin-top: 2rem; }
+  .contact .btn:hover { background: var(--accent); color: #fff; }
+
+  footer { padding: 2.5rem 0 3.5rem; font-size: var(--step--1); color: var(--muted); display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; justify-content: space-between; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap bar">
+    <span class="mark">JC Torres</span>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="wrap hero">
+    <p class="eyebrow">Automation and CRM systems</p>
+    <h1>I build the systems a business <em>actually</em> runs on.</h1>
+    <p class="lede">
+      CRM builds, automation between tools that were never meant to talk to each other, and AI
+      wired into the work rather than sitting in a chat window. Then documented, so your team can
+      run it without me.
+    </p>
+    <div class="hero-meta">
+      <a class="btn" href="#contact">Start a conversation</a>
+      <a class="btn ghost" href="#work">See the work</a>
+    </div>
+  </div>
+
+  <section class="wrap" id="services" aria-labelledby="services-h">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 id="services-h">What I build</h2>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+    <div class="caps">
+      <article class="cap">
+        <h3>CRM builds</h3>
+        <p>GoHighLevel end to end. Pipelines, calendars, forms, funnels and the follow up that
+        actually gets someone called back. Migrations off other platforms with the history intact.</p>
+      </article>
+      <article class="cap">
+        <h3>Automation</h3>
+        <p>n8n and webhooks joining the tools you already pay for. Built so one broken step never
+        silently drops a customer, and so running it twice does not create the work twice.</p>
+      </article>
+      <article class="cap">
+        <h3>AI systems</h3>
+        <p>Voice AI answering after hours, chat across web and social, and agents for the jobs that
+        repeat. Human approval built in as a gate, not a suggestion.</p>
+      </article>
+      <article class="cap">
+        <h3>Audits and rescue</h3>
+        <p>Inherited an account nobody understands, or an automation that reports success while
+        doing nothing? I find what is actually broken and rank it by what it costs you.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="work" aria-labelledby="work-h">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 id="work-h">Selected work</h2>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+
+    <div class="work">
+
+      <article class="item reveal">
+        <div>
+          <p class="kind">Full CRM build</p>
+          <h3>An Australian finance business, still running it</h3>
+        </div>
+        <div>
+          <p>Migrated roughly 1,600 contacts and 1,000 deals off HubSpot with the notes and tasks
+          landing on the right records. Built the pipelines, calendars and the whole follow up set:
+          instant acknowledgement, quote chasing, missed call text back, reactivation, reviews and
+          referrals.</p>
+          <p>Meta lead ads feed straight in, four websites push their forms in, and Xero syncs both
+          ways so a deal flips to Won when the invoice is paid. Voice AI covers after hours and a
+          chat bot covers web, SMS and social. Regulated industry, so it was built inside the rules
+          rather than around them.</p>
+          <div class="tags">
+            <span class="tag">GoHighLevel</span><span class="tag">n8n</span><span class="tag">Xero</span><span class="tag">Meta Lead Ads</span><span class="tag">Slack</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="item reveal">
+        <div>
+          <p class="kind">Retention automation</p>
+          <h3>Turning cancellations into saves</h3>
+        </div>
+        <div>
+          <p>A software business was losing every customer who clicked cancel. I built the flow that
+          catches the cancellation, reaches the customer while it still matters, and routes them to
+          a retention offer.</p>
+          <p><strong>Before it existed, nobody was saved. It now recovers two to three customers a
+          week.</strong></p>
+          <div class="tags"><span class="tag">n8n</span><span class="tag">Lifecycle email</span></div>
+        </div>
+      </article>
+
+      <article class="item reveal">
+        <div>
+          <p class="kind">Product build</p>
+          <h3>A safety critical telehealth platform</h3>
+        </div>
+        <div>
+          <p>Identity data sits in a physically separate database with its own credentials, and the
+          application is wired so no other part of it can reach in and query it. Human approval is a
+          state the work has to pass through, so nothing reaches a client until a person releases it,
+          and a crisis check runs before any payment is taken.</p>
+          <p>Proven end to end with an integration test suite. Built and running, with deployment as
+          the next phase.</p>
+          <div class="tags"><span class="tag">NestJS</span><span class="tag">Next.js</span><span class="tag">PostgreSQL</span><span class="tag">Prisma</span></div>
+        </div>
+      </article>
+
+      <article class="item reveal">
+        <div>
+          <p class="kind">Migration</p>
+          <h3>Moving a domain without killing the email</h3>
+        </div>
+        <div>
+          <p>A business moving off WordPress had no mail record of its own, so their email was
+          quietly depending on the exact record the migration was about to change. Nothing in the
+          plan mentioned email.</p>
+          <p>I checked it four ways, stopped the cutover, and only restarted once it was resolved.
+          Their old admin stayed reachable the whole way through.</p>
+          <div class="tags"><span class="tag">DNS</span><span class="tag">WordPress</span><span class="tag">GoHighLevel</span></div>
+        </div>
+      </article>
+
+      <article class="item reveal">
+        <div>
+          <p class="kind">Audit</p>
+          <h3>153 workflows nobody could explain</h3>
+        </div>
+        <div>
+          <p>An account inherited from a previous agency, carrying 153 workflows from an old snapshot
+          with no record of what any of them did. I went through all of it and came back with 11
+          findings ranked by what each one was costing, with the fix for each.</p>
+          <p>That included the configuration fault that had silently killed their booking funnel,
+          which had been showing no available times and saying nothing about it.</p>
+          <div class="tags"><span class="tag">GoHighLevel</span><span class="tag">Reporting</span></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="wrap" id="experience" aria-labelledby="exp-h">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 id="exp-h">Where I have worked</h2>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+    <div class="roles">
+      <div class="role">
+        <div>
+          <h3>CRM and Automation Engineer</h3>
+          <p class="co">EquipU, Australia</p>
+        </div>
+        <p>Built and still support the full GoHighLevel system, the HubSpot migration, every
+        automation in it, and the reporting the team runs on.</p>
+      </div>
+      <div class="role">
+        <div>
+          <h3>Automation and Operations Specialist</h3>
+          <p class="co">BookBrush</p>
+        </div>
+        <p>Built the churn save automation that took saved cancellations from none to
+        <strong>two or three a week</strong>. Also ran social posting and content ideation.</p>
+      </div>
+      <div class="role">
+        <div>
+          <h3>Automation Specialist</h3>
+          <p class="co">Top1ops, real estate</p>
+        </div>
+        <p>Lead routing that gets each enquiry to the right person without anyone sorting a list.</p>
+      </div>
+      <div class="role">
+        <div>
+          <h3>Automation Specialist</h3>
+          <p class="co">One Dash</p>
+        </div>
+        <p>Outbound lead pipeline from Instantly into GoHighLevel, with the nurture that carries a
+        lead through to a sale.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="contact" aria-labelledby="contact-h">
+    <div class="contact">
+      <h2 id="contact-h">What happens in your first five minutes?</h2>
+      <p>
+        After someone fills in your form. If the honest answer is that it sits in an inbox, that is
+        usually the most expensive thing in the business and the easiest to fix. Tell me what you
+        are working with and I will tell you straight whether I can help.
+      </p>
+      <a class="btn" href="mailto:jaysiesantostorres@gmail.com">jaysiesantostorres@gmail.com</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>JC Torres · Pampanga, Philippines</span>
+  <span>
+    <a href="https://www.linkedin.com/in/jc-torres-31b693402/">LinkedIn</a>
+  </span>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  }, { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>
+</body>
+</html>
