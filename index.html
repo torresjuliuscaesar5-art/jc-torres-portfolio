@@ -235,12 +235,13 @@
   .band-foot { margin-top: 2.6rem; font-size: var(--step-1); color: #fff; max-width: 46ch; font-family: "Century Gothic", Jost, sans-serif; line-height: 1.35; }
 
   /* ================= capabilities ================= */
-  .caps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
-  .cap { background: var(--panel); padding: 2rem 1.7rem; transition: background 0.3s var(--ease); }
+  /* ten items, so two columns divides evenly and leaves no dead cell */
+  .caps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  @media (max-width: 720px) { .caps { grid-template-columns: 1fr; } }
+  .cap { background: var(--panel); padding: 1.8rem 1.9rem; transition: background 0.3s var(--ease); }
   .cap:hover { background: #f3f6fd; }
-  .cap-ico { width: 34px; height: 34px; color: var(--accent); transition: color 0.3s var(--ease), transform 0.3s var(--ease); }
-  .cap:hover .cap-ico { color: var(--navy); transform: translateY(-2px); }
-  .cap h3 { font-size: var(--step-1); color: var(--navy); font-weight: 600; margin: 1.1rem 0 0.6rem; font-family: "Century Gothic", Jost, sans-serif; letter-spacing: -0.01em; }
+  .cap-n { font-size: 0.78rem; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; }
+  .cap h3 { font-size: var(--step-1); color: var(--navy); font-weight: 600; margin: 0.55rem 0 0.5rem; font-family: "Century Gothic", Jost, sans-serif; letter-spacing: -0.01em; }
   .cap p { font-size: var(--step--1); color: var(--muted); line-height: 1.6; }
 
   /* ================= work ================= */
@@ -786,33 +787,59 @@
   <section class="wrap" id="services" aria-labelledby="services-h">
     <div class="sec-head">
       <span class="sec-num">02</span>
-      <h2 id="services-h">What I build</h2>
+      <h2 id="services-h">What I do</h2>
       <span class="rule" aria-hidden="true"></span>
     </div>
     <div class="caps">
       <article class="cap">
-        <svg class="cap-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h11"/><circle cx="18.5" cy="17" r="2.2"/></svg>
-        <h3>CRM builds</h3>
-        <p>GoHighLevel end to end. Pipelines, calendars, forms, funnels and the follow up that
-        actually gets someone called back. Migrations off other platforms with the history intact.</p>
+        <span class="cap-n">01</span>
+        <h3>Marketing automation</h3>
+        <p>Automated capture and follow up in GoHighLevel and n8n. Instant acknowledgement on enquiry, quote chasing, missed call text back, reactivation, review requests and referrals, plus rules that pull someone out of a sequence once a person has spoken to them.</p>
       </article>
       <article class="cap">
-        <svg class="cap-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h6l3 6 3-6h4"/><path d="M4 18h6l3-6"/><circle cx="20" cy="18" r="2"/></svg>
-        <h3>Automation</h3>
-        <p>n8n and webhooks joining the tools you already pay for. Built so one broken step never
-        silently drops a customer, and so running it twice never creates the work twice.</p>
+        <span class="cap-n">02</span>
+        <h3>API integration</h3>
+        <p>Connecting systems that were never built to talk to each other. Meta lead ads into a CRM, WordPress and Shopify forms, a two way Xero sync so an opportunity flips to Won when the invoice is paid, Slack alerting, and CRM to task tool automation with duplicate checks.</p>
       </article>
       <article class="cap">
-        <svg class="cap-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="6" width="16" height="13" rx="3"/><path d="M9 11v3M15 11v3M12 3v3"/></svg>
-        <h3>AI that earns its place</h3>
-        <p>Voice AI answering after hours, chat across web and social, and agents for the jobs that
-        repeat. Human approval built in as a gate rather than a suggestion.</p>
+        <span class="cap-n">03</span>
+        <h3>Business process automation</h3>
+        <p>Client onboarding, intake, task routing and internal notifications, end to end. Built with error handling and idempotency, so one broken step never drops a customer and running something twice never creates the work twice.</p>
       </article>
       <article class="cap">
-        <svg class="cap-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/><path d="M8.5 11h5"/></svg>
-        <h3>Audits and rescues</h3>
-        <p>Inherited an account nobody understands, or something that broke and nobody knows when?
-        I find what is actually wrong and rank it by what it is costing you.</p>
+        <span class="cap-n">04</span>
+        <h3>Lead generation systems</h3>
+        <p>Landing pages and forms feeding straight into a CRM. Meta lead ads with the product question on the form so attribution comes from the form, qualification and routing to the right person, and nurture that carries a cold lead through to a sale.</p>
+      </article>
+      <article class="cap">
+        <span class="cap-n">05</span>
+        <h3>Chat and voice AI</h3>
+        <p>Conversation AI across web chat, SMS, Facebook, Instagram and WhatsApp. Voice AI answering calls outside office hours with FAQs, routing and basic qualification.</p>
+      </article>
+      <article class="cap">
+        <span class="cap-n">06</span>
+        <h3>Email and lifecycle</h3>
+        <p>Sequences in GoHighLevel and Klaviyo. Onboarding runs of ten or more emails with staged timing, win back and reactivation drips, review and referral requests, plus deliverability work on sender domains and spam placement.</p>
+      </article>
+      <article class="cap">
+        <span class="cap-n">07</span>
+        <h3>Landing pages and funnels</h3>
+        <p>Pages built to a single objective with the form wired into the CRM behind it. GoHighLevel, WordPress, Shopify and Systeme.io.</p>
+      </article>
+      <article class="cap">
+        <span class="cap-n">08</span>
+        <h3>Web and app development</h3>
+        <p>Next.js, React, NestJS, Node, TypeScript, PostgreSQL, Prisma and Supabase, alongside WordPress and Shopify sites connected into a CRM.</p>
+      </article>
+      <article class="cap">
+        <span class="cap-n">09</span>
+        <h3>CRM migration</h3>
+        <p>Migrations with the history intact. Around 1,600 contacts and 1,000 deals moved off HubSpot with notes and tasks landing on the right records, including deal stage and custom field mapping.</p>
+      </article>
+      <article class="cap">
+        <span class="cap-n">10</span>
+        <h3>AI agents</h3>
+        <p>AI built into the systems a business already uses rather than sitting in a separate window. Agents built with Claude for work that repeats, with human approval as a gate so nothing reaches a customer until a person releases it.</p>
       </article>
     </div>
   </section>
